@@ -22,7 +22,7 @@ app.get('/videos/', (req: Request, res: Response) => {
 })
 app.post('/videos', (req: Request, res: Response) => {
   if(!req.body.title) {
-    res.sendStatus(400)
+    res.sendStatus(400).send({ errorsMessages: [{ message: "string", field: "title" }], resultCode: 1 })
   }
   const newVideo = {
       id: +(new Date()),
