@@ -22,7 +22,7 @@ app.get('/videos/', (req: Request, res: Response) => {
 })
 app.post('/videos', (req: Request, res: Response) => {
   if(!req.body.title) {
-    res.sendStatus(400).send({ errorsMessages: [{ message: "string", field: "title" }], resultCode: 1 })
+    res.status(400).send({ errorsMessages: [{ message: "string", field: "title" }], resultCode: 1 })
   }
   const newVideo = {
       id: +(new Date()),
@@ -30,7 +30,7 @@ app.post('/videos', (req: Request, res: Response) => {
       author: 'it-incubator.eu'
   }
   videos.push(newVideo)
-  res.sendStatus(201).send(newVideo)
+  res.status(201).send(newVideo)
 })
 app.get('/videos/:videoId', (req: Request, res: Response) => {
   const id = +req.params.videoId;
@@ -61,7 +61,7 @@ app.delete('/videos/:id',(req: Request, res: Response)=>{
    if(v.id!==id) return v
    return {...v,title}
  })
-  res.sendStatus(204).send(videos) 
+  res.status(204).send(videos) 
 })
 
 app.listen(port, () => {
