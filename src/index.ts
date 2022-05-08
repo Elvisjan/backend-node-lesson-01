@@ -50,13 +50,13 @@ app.delete('/videos/:id',(req: Request, res: Response)=>{
  })
  app.put('/videos/:id',(req: Request, res: Response)=>{
   const id = +req.params.id;
-  if(!id) {
+  const title = req.body.title
+  if(!id ||!title|| title.length > 40) {
     res.sendStatus(400)
   }
   if(!videos.map(v=>v.id).includes(id)) {
     res.sendStatus(404)
   }
-  const title = req.body.title
   videos= videos.map((v)=>{
    if(v.id!==id) return v
    return {...v,title}
