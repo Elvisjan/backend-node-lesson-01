@@ -21,7 +21,7 @@ app.get('/videos/', (req: Request, res: Response) => {
   res.send(videos)
 })
 app.post('/videos', (req: Request, res: Response) => {
-  if(!req.body.title) {
+  if(!req.body.title|| req.body.title.length > 40) {
     res.status(400).send({ errorsMessages: [{ message: "string", field: "title" }], resultCode: 1 })
   }
   const newVideo = {
