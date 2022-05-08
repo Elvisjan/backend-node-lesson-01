@@ -52,7 +52,7 @@ app.delete('/videos/:id',(req: Request, res: Response)=>{
   const id = +req.params.id;
   const title = req.body.title
   if(!id ||!title|| title.length > 40) {
-    res.sendStatus(400)
+    res.status(400).send({ errorsMessages: [{ message: "field incorrect", field: "title" }], resultCode: 1 })
   }
   if(!videos.map(v=>v.id).includes(id)) {
     res.sendStatus(404)
