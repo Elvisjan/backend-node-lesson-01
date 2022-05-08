@@ -1,6 +1,5 @@
 import express, { Request, Response } from "express"
 import cors from 'cors'
-import bodyParser from "body-parser"
 let videos = [
   {id: 1, title: 'About JS - 01', author: 'it-incubator.eu'},
   {id: 2, title: 'About JS - 02', author: 'it-incubator.eu'},
@@ -22,6 +21,9 @@ app.get('/videos/', (req: Request, res: Response) => {
   res.send(videos)
 })
 app.post('/videos', (req: Request, res: Response) => {
+  if(!req.body.title) {
+    res.sendStatus(400)
+  }
   const newVideo = {
       id: +(new Date()),
       title: req.body.title,
@@ -48,6 +50,9 @@ app.delete('/videos/:id',(req: Request, res: Response)=>{
  })
  app.put('/videos/:id',(req: Request, res: Response)=>{
   const id = +req.params.id;
+  if(!id) {
+    res.sendStatus(400)
+  }
   if(!videos.map(v=>v.id).includes(id)) {
     res.sendStatus(404)
   }
@@ -56,7 +61,7 @@ app.delete('/videos/:id',(req: Request, res: Response)=>{
    if(v.id!==id) return v
    return {...v,title}
  })
-  res.sendStatus(200).send(videos) 
+  res.sendStatus(204).send(videos) 
 })
 
 app.listen(port, () => {
